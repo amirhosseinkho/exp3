@@ -54,4 +54,55 @@ public class Library {
         System.out.println("!! " + student.getName() + " doesn't have the book.");
         return false;
     }
+    public ArrayList<Student> searchStudents(SearchByType searchByType, ArrayList<Object> keys) {
+        ArrayList<Student> result = new ArrayList<>();
+        if (searchByType == SearchByType.ID) {
+            for (Object key : keys) {
+                for (Student student : students) {
+                    if (student.getId() == (int) key) {
+                        result.add(student);
+                    }
+                }
+            }
+        } else if (searchByType == SearchByType.NAME) {
+            for (Object key : keys) {
+                for (Student student : students) {
+                    if (student.getName().equalsIgnoreCase((String) key)) {
+                        result.add(student);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Book> searchBooks(SearchByType searchByType, ArrayList<Object> keys) {
+        ArrayList<Book> result = new ArrayList<>();
+        if (searchByType == SearchByType.ID) {
+            for (Object key : keys) {
+                for (Book book : books) {
+                    if (book.getId() == (int) key) {
+                        result.add(book);
+                    }
+                }
+            }
+        } else if (searchByType == SearchByType.TITLE) {
+            for (Object key : keys) {
+                for (Book book : books) {
+                    if (book.getTitle().equalsIgnoreCase((String) key)) {
+                        result.add(book);
+                    }
+                }
+            }
+        } else if (searchByType == SearchByType.AUTHOR) {
+            for (Object key : keys) {
+                for (Book book : books) {
+                    if (book.getAuthor().equalsIgnoreCase((String) key)) {
+                        result.add(book);
+                    }
+                }
+            }
+        }
+        return result;
+    }
 }
