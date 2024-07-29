@@ -91,6 +91,214 @@ public class Book {
 ```
 
 
+### ایراد 2: بررسی ثبت دانشجو در کتابخانه 
+متدهای lendBook و returnBook بررسی نمی‌کردند که آیا دانشجو در کتابخانه ثبت شده است یا خیر. 
+ 
+#### تست‌ها 
+ابتدا تست‌هایی برای بررسی ثبت دانشجو نوشتیم: 
+
+```java 
+// src/test/java/main/classes/LibraryTest.java 
+package main.classes; 
+ 
+import static org.junit.jupiter.api.Assertions.assertFalse; 
+import static org.junit.jupiter.api.Assertions.assertTrue; 
+import org.junit.jupiter.api.Test; 
+ 
+public class LibraryTest { 
+    @Test 
+    public void testLendBookToNonRegisteredStudent() { 
+        Library library = new Library(); 
+        Book book = new Book("Title", "Author", 1); 
+        Student student = new Student("Student", 1); 
+ 
+        library.addBook(book); 
+ 
+        assertFalse(library.lendBook(book, student)); 
+    } 
+ 
+    @Test 
+    public void testReturnBookByNonRegisteredStudent() { 
+        Library library = new Library(); 
+        Book book = new Book("Title", "Author", 1); 
+        Student student = new Student("Student", 1); 
+ 
+        library.addBook(book); 
+ 
+        assertFalse(library.returnBook(book, student)); 
+    } 
+} 
+```
+
+#### رفع ایراد 
+متدهای lendBook و returnBook تغییر یافتند تا بررسی کنند که آیا دانشجو در کتابخانه ثبت شده است یا خیر:
+```java 
+// src/main/java/main/classes/Library.java 
+package main.classes; 
+ 
+import java.util.ArrayList; 
+ 
+public class Library { 
+    private ArrayList<Book> books; 
+    private ArrayList<Student> students; 
+ 
+    public Library() { 
+        books = new ArrayList<>(); 
+        students = new ArrayList<>(); 
+    } 
+ 
+    public void addBook(Book book) { 
+        books.add(book); 
+    } 
+ 
+    public void addStudent( Student student) { 
+        students.add(student); 
+    } 
+ 
+    public boolean lendBook(Book book, Student student) { 
+        if (!this.books.contains(book)) { 
+            System.out.println("!! Book " + book.getTitle() + " not registered."); 
+            return false; 
+        } 
+        if (!this.students.contains(student)) { 
+            System.out.println("!! Student " + student.getName() + " not registered."); 
+            return false; 
+        } 
+        if (student.hasBook(book)) { 
+            System.out.println("!! Student already has the book."); 
+            return false; 
+        } 
+ 
+        this.books.remove(book); 
+        student.addBook(book); 
+        System.out.println(book.getTitle() + " lent to " + student.getName() + "."); 
+        return true; 
+    } 
+ 
+    public boolean returnBook(Book book, Student student) { 
+        if (!this.students.contains(student)) { 
+            System.out.println("!! Student " + student.getName() + " not registered."); 
+            return false; 
+        } 
+        if (student.hasBook(book)) { 
+            this.books.add(book); 
+            System.out.println(student.getName() + " returned " + book.getTitle() + "."); 
+            return true; 
+        } 
+ 
+        System.out.println("!! " + student.getName() + " doesn't have the book."); 
+        return false; 
+    } 
+}
+```
+
+ 
+ 
+## تکمیل توابع جستجو با استفاده از TDD 
+ 
+### تست‌های نوشته شده 
+ 
+```java 
+// src/test/java/main/classes/LibrarySearchTest.java 
+package main.classes; 
+ 
+import static org.junit.jupiter.api.Assertions.assertEquals; 
+import org.junit.jupiter.api.Test; 
+import java.util.ArrayList; 
+import java.util.List; 
+ 
+public class LibrarySearchTest { 
+    @Test 
+    public void testSearchBooksByTitle() { 
+        Library library = new Library(); 
+        Book book = new Book("Effective Java", "Joshua Bloch", 1); 
+        library.addBook(book); 
+        ArrayList<Object> keys = new ArrayList<>(); 
+        keys.add("Effective Java"); 
+        List<Book> result = library.searchBooks(SearchByType.TITLE, keys); 
+        assertEquals(1, result.size()); 
+        assertEquals(book, result.get(0)); 
+    } 
+ 
+    @Test 
+    public void testSearchBooksByAuthor() { 
+        Library library = new Library(); 
+        Book book = new Book("Effective Java", "Joshua Bloch", 1); 
+        library.addBook(book); 
+        ArrayList<Object> keys = new ArrayList<>(); 
+        keys.add("Joshua Bloch"); 
+        List<Book> result = library.searchBooks(SearchByType.AUTHOR, keys); 
+        assertEquals(1, result.size()); 
+        assertEquals(book, result.get(0)); 
+    } 
+} 
+```
+
+### پیاده‌سازی نهایی توابع جستجو 
+ 
+```java 
+// src/main/java/main/classes/Library.java 
+package main.classes; 
+ 
+import java.util.ArrayList; 
+import java.util.List; 
+ 
+public class Library { 
+    //... other methods 
+ 
+    public ArrayList<Student> searchStudents(SearchByType searchByType, ArrayList<Object> keys) { 
+        ArrayList<Student> result = new ArrayList<>(); 
+        if (searchByType == SearchByType.ID) { 
+            for (Object key : keys) { 
+                for (Student student : students) { 
+                    if (student.getId() == (int) key) { 
+                        result.add(student); 
+                    } 
+                } 
+            } 
+        } else if (searchByType == SearchByType.NAME) { 
+            for (Object key : keys) { 
+                for (Student student : students) { 
+                    if (student.getName().equalsIgnoreCase((String) key)) { 
+                        result.add(student); 
+                    } 
+                } 
+            } 
+        } 
+        return result; 
+    } 
+ 
+    public ArrayList<Book> searchBooks(SearchByType searchByType, ArrayList<Object> keys) { 
+        ArrayList<Book> result = new ArrayList<>(); 
+        if (searchByType == SearchByType.ID) { 
+            for (Object key : keys) { 
+                for (Book book : books) { 
+                    if (book.getId() == (int) key) { 
+                        result.add(book); 
+                    } 
+                } 
+            }
+} else if (searchByType == SearchByType.TITLE) { 
+            for (Object key : keys) { 
+                for (Book book : books) { 
+                    if (book.getTitle().equalsIgnoreCase((String) key)) { 
+                        result.add(book); 
+                    } 
+                } 
+            } 
+        } else if (searchByType == SearchByType.AUTHOR) { 
+            for (Object key : keys) { 
+                for (Book book : books) { 
+                    if (book.getAuthor().equalsIgnoreCase((String) key)) { 
+                        result.add(book); 
+                    } 
+                } 
+            } 
+        } 
+        return result; 
+    } 
+}
+```
 
 
 ## ۱. مقایسه روش TDD با روش تست کردن سنتی
