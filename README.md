@@ -304,6 +304,13 @@ public class Library {
 ![Screenshot 2024-07-29 152230](https://github.com/user-attachments/assets/9c8514a2-e6aa-4f5d-96d4-debc27576310)
 
 
+در اخر نیز تست کاورج را مشاهده میکنیم و در ادامه فایل html از گزارش تست کاورج میسازیم. فایل های html در فایل main.classes قرار گرفت.
+![Screenshot 2024-07-30 130127](https://github.com/user-attachments/assets/e2d473ad-f21b-4eb9-88c0-ac8d89007e9b)
+![Screenshot 2024-07-30 130222](https://github.com/user-attachments/assets/ee855048-15c5-40c2-bba4-131bd52dbef2)
+![Screenshot 2024-07-30 130302](https://github.com/user-attachments/assets/a4cc8caf-5081-4d2a-990e-7e16828f2776)
+![Screenshot 2024-07-30 130554](https://github.com/user-attachments/assets/ec4460f5-7d8f-43bf-bf52-f726081dc696)
+
+
 ## ۱. مقایسه روش TDD با روش تست کردن سنتی
 ### روش TDD (Test-Driven Development)در روش TDD، ابتدا تست‌ها نوشته می‌شوند و سپس کدهایی که تست‌ها را عبور می‌دهند، نوشته می‌شوند. این روش برای پروژه‌هایی مناسب است که:
 - پیچیدگی بالایی دارند و نیاز به اطمینان از صحت عملکرد بخش‌های مختلف دارند.- نیاز به تغییرات مکرر و به‌روزرسانی‌های مستمر دارند.
