@@ -1,3 +1,4 @@
+// src/main/java/main/classes/Library.java
 package main.classes;
 
 import java.util.ArrayList;
@@ -19,17 +20,13 @@ public class Library {
         students.add(student);
     }
 
-    /**
-     * Lends a book to a student. Removes the book from the library and adds it to the student's list.
-     * This operation fails if the library doesn't have the student or the book or the student already has the book.
-     *
-     * @param book    The book to be lent.
-     * @param student The student who is going to borrow the book.
-     * @return        Returns true if the operation is successful and false otherwise.
-     */
     public boolean lendBook(Book book, Student student) {
         if (!this.books.contains(book)) {
             System.out.println("!! Book " + book.getTitle() + " not registered.");
+            return false;
+        }
+        if (!this.students.contains(student)) {
+            System.out.println("!! Student " + student.getName() + " not registered.");
             return false;
         }
         if (student.hasBook(book)) {
@@ -43,14 +40,6 @@ public class Library {
         return true;
     }
 
-    /**
-     * The student returns the book to the library. Removes the book from the student's list and adds it to the library.
-     * This operation fails if the library doesn't have the student or the student doesn't have the book.
-     *
-     * @param book    The book to be returned.
-     * @param student The student who is going to return the book.
-     * @return Returns true if the operation is successful and false otherwise.
-     */
     public boolean returnBook(Book book, Student student) {
         if (!this.students.contains(student)) {
             System.out.println("!! Student " + student.getName() + " not registered.");
@@ -65,50 +54,55 @@ public class Library {
         System.out.println("!! " + student.getName() + " doesn't have the book.");
         return false;
     }
-
-    /**
-     * Returns a list of students where the specified field matches any of the keys provided.
-     * The specified field is determined by the searchByType argument, which can be id or name (but not title or author).
-     *
-     * @param searchByType Specifies the field used for searching (id, name).
-     * @param keys         The list of keys to search for.
-     * @return             The list of students that match the search criteria. Returns null if search type is title or author.
-     */
     public ArrayList<Student> searchStudents(SearchByType searchByType, ArrayList<Object> keys) {
-        // TODO complete function
-        return null;
+        ArrayList<Student> result = new ArrayList<>();
+        if (searchByType == SearchByType.ID) {
+            for (Object key : keys) {
+                for (Student student : students) {
+                    if (student.getId() == (int) key) {
+                        result.add(student);
+                    }
+                }
+            }
+        } else if (searchByType == SearchByType.NAME) {
+            for (Object key : keys) {
+                for (Student student : students) {
+                    if (student.getName().equalsIgnoreCase((String) key)) {
+                        result.add(student);
+                    }
+                }
+            }
+        }
+        return result;
     }
 
-    /**
-     * Returns a list of books where the specified field matches any of the keys provided.
-     * The specified field is determined by the searchByType argument, which can be id, title, or author (but not name).
-     *
-     * @param searchByType Specifies the field used for searching (id, title, or author).
-     * @param keys         The list of keys to search for.
-     * @return             The list of books that match the search criteria. Returns null if search type is name.
-     */
     public ArrayList<Book> searchBooks(SearchByType searchByType, ArrayList<Object> keys) {
-        // TODO complete function
-        return null;
-    }
-
-    /**
-     * Displays the books of library.
-     */
-    public void displayBooks() {
-        System.out.println("Available books in library:");
-        for (Book book : books) {
-            System.out.println(book);
+        ArrayList<Book> result = new ArrayList<>();
+        if (searchByType == SearchByType.ID) {
+            for (Object key : keys) {
+                for (Book book : books) {
+                    if (book.getId() == (int) key) {
+                        result.add(book);
+                    }
+                }
+            }
+        } else if (searchByType == SearchByType.TITLE) {
+            for (Object key : keys) {
+                for (Book book : books) {
+                    if (book.getTitle().equalsIgnoreCase((String) key)) {
+                        result.add(book);
+                    }
+                }
+            }
+        } else if (searchByType == SearchByType.AUTHOR) {
+            for (Object key : keys) {
+                for (Book book : books) {
+                    if (book.getAuthor().equalsIgnoreCase((String) key)) {
+                        result.add(book);
+                    }
+                }
+            }
         }
-    }
-
-    /**
-     * Displays the students registered in the library.
-     */
-    public void displayStudents() {
-        System.out.println("Registered students:");
-        for (Student student : students) {
-            System.out.println(student);
-        }
+        return result;
     }
 }
