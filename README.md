@@ -1,14 +1,19 @@
-# Exp3 
-# گزارش پروژه کتابخانه 
- در برنچ TestAndFail تست‌ها نوشته شد و ایرادات پیدا شد. و در برنچ debug، ایرادات اصلاح شد و تست‌های جدید هم اضافه شد.
-## اصلاح ایرادات 
- 
-### ایراد 1: `equals` و `hashCode` در `Book.java` 
-کلاس `Book` فاقد متدهای `equals` و `hashCode` بود که می‌توانست مشکلاتی در مقایسه و استفاده از اشیا `Book` در ساختارهای داده‌ای مانند `ArrayList` ایجاد کند. 
- 
-#### تست‌ها 
-ابتدا تست‌هایی برای بررسی `equals` و `hashCode` نوشتیم: 
- 
+> Persian version: [README.fa.md](README.fa.md)
+
+# Exp3: Library project report (testing, debugging and TDD)
+
+Tests were written and the bugs were found in the `TestAndFail` branch. The bugs were fixed and new tests were added in the `debug` branch.
+
+## Bug fixes
+
+### Bug 1: `equals` and `hashCode` in `Book.java`
+
+The `Book` class had no `equals` and `hashCode` methods, which could cause problems when comparing `Book` objects and when using them in data structures such as `ArrayList`.
+
+#### Tests
+
+We first wrote tests for `equals` and `hashCode`:
+
 ```java 
 // src/test/java/main/classes/BookTest.java 
 package main.classes; 
@@ -38,8 +43,10 @@ public class BookTest {
 }
 ```
 
-#### رفع ایراد 
-متدهای equals و hashCode به کلاس Book اضافه شدند: 
+#### Fix
+
+`equals` and `hashCode` were added to the `Book` class:
+
 ```java 
 // src/main/java/main/classes/Book.java 
 package main.classes; 
@@ -89,12 +96,13 @@ public class Book {
 } 
 ```
 
+### Bug 2: checking that the student is registered with the library
 
-### ایراد 2: بررسی ثبت دانشجو در کتابخانه 
-متدهای lendBook و returnBook بررسی نمی‌کردند که آیا دانشجو در کتابخانه ثبت شده است یا خیر. 
- 
-#### تست‌ها 
-ابتدا تست‌هایی برای بررسی ثبت دانشجو نوشتیم: 
+`lendBook` and `returnBook` did not check whether the student was registered with the library.
+
+#### Tests
+
+We first wrote tests for student registration:
 
 ```java 
 // src/test/java/main/classes/LibraryTest.java 
@@ -129,8 +137,10 @@ public class LibraryTest {
 } 
 ```
 
-#### رفع ایراد 
-متدهای lendBook و returnBook تغییر یافتند تا بررسی کنند که آیا دانشجو در کتابخانه ثبت شده است یا خیر:
+#### Fix
+
+`lendBook` and `returnBook` were changed to check whether the student is registered with the library:
+
 ```java 
 // src/main/java/main/classes/Library.java 
 package main.classes; 
@@ -191,12 +201,10 @@ public class Library {
 }
 ```
 
- 
- 
-## تکمیل توابع جستجو با استفاده از TDD 
- 
-### تست‌های نوشته شده 
- 
+## Completing the search functions with TDD
+
+### Tests
+
 ```java 
 // src/test/java/main/classes/LibrarySearchTest.java 
 package main.classes; 
@@ -233,8 +241,8 @@ public class LibrarySearchTest {
 } 
 ```
 
-### پیاده‌سازی نهایی توابع جستجو 
- 
+### Final implementation of the search functions
+
 ```java 
 // src/main/java/main/classes/Library.java 
 package main.classes; 
@@ -298,42 +306,78 @@ public class Library {
     } 
 }
 ```
+
 ![Screenshot 2024-07-29 152405](https://github.com/user-attachments/assets/322ab294-9714-401d-9b63-6e115b1df5a7)
 ![Screenshot 2024-07-29 152450](https://github.com/user-attachments/assets/41fe2906-063b-4a69-b86c-b6644fa5a222)
 ![Screenshot 2024-07-28 195516](https://github.com/user-attachments/assets/f6c7352e-bedd-4a4e-be53-b164d69982b2)
 ![Screenshot 2024-07-29 152230](https://github.com/user-attachments/assets/9c8514a2-e6aa-4f5d-96d4-debc27576310)
 
+Finally, we checked the test coverage and generated an HTML coverage report. The HTML files are in the `main.classes` folder.
 
-در اخر نیز تست کاورج را مشاهده میکنیم و در ادامه فایل html از گزارش تست کاورج میسازیم. فایل های html در فایل main.classes قرار گرفت.
 ![Screenshot 2024-07-30 130127](https://github.com/user-attachments/assets/e2d473ad-f21b-4eb9-88c0-ac8d89007e9b)
 ![Screenshot 2024-07-30 130222](https://github.com/user-attachments/assets/ee855048-15c5-40c2-bba4-131bd52dbef2)
 ![Screenshot 2024-07-30 130302](https://github.com/user-attachments/assets/a4cc8caf-5081-4d2a-990e-7e16828f2776)
 ![Screenshot 2024-07-30 130554](https://github.com/user-attachments/assets/ec4460f5-7d8f-43bf-bf52-f726081dc696)
 
+## 1. TDD compared with traditional testing
 
-## ۱. مقایسه روش TDD با روش تست کردن سنتی
-### روش TDD (Test-Driven Development)در روش TDD، ابتدا تست‌ها نوشته می‌شوند و سپس کدهایی که تست‌ها را عبور می‌دهند، نوشته می‌شوند. این روش برای پروژه‌هایی مناسب است که:
-- پیچیدگی بالایی دارند و نیاز به اطمینان از صحت عملکرد بخش‌های مختلف دارند.- نیاز به تغییرات مکرر و به‌روزرسانی‌های مستمر دارند.
-- اهمیت زیادی در عملکرد صحیح و بدون خطا دارند، مانند سیستم‌های مالی و پزشکی.
-### روش تست کردن سنتیدر روش سنتی، ابتدا کدها نوشته می‌شوند و سپس تست‌ها برای بررسی صحت کدها نوشته می‌شوند. این روش برای پروژه‌هایی مناسب است که:
-- کوچک و کوتاه‌مدت هستند و زمان زیادی برای نوشتن تست‌های اولیه ندارند.- نیاز به تغییرات کم و به‌روزرسانی‌های محدود دارند.
-- اهمیت کمتری در عملکرد بدون خطا دارند و خطاها تاثیرات کمتری دارند.
-## ۲. وظایف تیم ایجاد و تیم تضمین کیفیت در تست نرم‌افزار
-### تیم ایجاد (Development Team)تیم ایجاد معمولاً با تست‌های زیر سروکار دارد:
-- تست‌های واحد (Unit Tests): این تست‌ها کوچک‌ترین واحدهای کد (توابع یا متدها) را بررسی می‌کنند و به توسعه‌دهندگان کمک می‌کنند تا اطمینان حاصل کنند که هر واحد به درستی کار می‌کند.- تست‌های یکپارچه‌سازی (Integration Tests): این تست‌ها تعامل بین چندین واحد کد را بررسی می‌کنند تا مطمئن شوند که بخش‌های مختلف سیستم به درستی با هم کار می‌کنند.
-### تیم تضمین کیفیت (QA Team)
-تیم تضمین کیفیت معمولاً با تست‌های زیر سروکار دارد:- تست‌های سیستم (System Tests): این تست‌ها کل سیستم را به عنوان یک واحد بررسی می‌کنند و از صحت عملکرد کل سیستم اطمینان حاصل می‌کنند.
-- تست‌های پذیرش (Acceptance Tests): این تست‌ها صحت عملکرد سیستم را بر اساس نیازمندی‌ها و معیارهای پذیرش بررسی می‌کنند.- تست‌های کاربری (User Acceptance Testing - UAT): این تست‌ها توسط کاربران نهایی انجام می‌شود تا مطمئن شوند که سیستم نیازمندی‌های آن‌ها را برآورده می‌کند.
-### شرح مختصر انواع تست‌ها
-- تست واحد (Unit Test): تست‌هایی که برای بررسی عملکرد صحیح و دقیق یک واحد خاص از کد نوشته می‌شوند.- تست یکپارچه‌سازی (Integration Test): تست‌هایی که تعامل بین واحدهای مختلف کد را بررسی می‌کنند.
-- تست سیستم (System Test): تست‌هایی که کل سیستم را به عنوان یک واحد بررسی می‌کنند.- تست پذیرش (Acceptance Test): تست‌هایی که بررسی می‌کنند آیا سیستم نیازمندی‌ها و معیارهای پذیرش را برآورده می‌کند.
-- تست کاربری (User Acceptance Test - UAT): تست‌هایی که توسط کاربران نهایی انجام می‌شود تا مطمئن شوند سیستم نیازمندی‌های آن‌ها را برآورده می‌کند.
-## ۳. روال پروژه json-simple برای به‌دست آوردن اعداد پوشش آزمون
-برای به‌دست آوردن اعداد پوشش آزمون در پروژه خود، مراحل زیر را انجام دهید:۱. بر روی پکیج java در مسیر test کلیک راست کنید.
-۲. گزینه Coverage with Tests All Run را انتخاب کنید.۳. اعداد پوشش آزمون برای پروژه به دست خواهند آمد.
-نیازی به اجرای عادی پروژه نیست و می‌توانید فقط از این روش برای به‌دست آوردن اعداد پوشش آزمون استفاده کنید.
-## ۴. بهبود پوشش آزمون با افزودن بخش‌هایی به کد تست
-برای بهبود اعداد پوشش آزمون، بخش‌های معناداری به کد تست اضافه کنید. این بخش‌ها باید:
-- تعاملات واقعی و کاربردی بین کلاس‌ها و متدها را شامل شوند.- مواردی از کد را پوشش دهند که در تست‌های قبلی پوشش داده نشده‌اند.
-- به درک بهتر عملکرد کلی سیستم کمک کنند.
-نکته مهم: از اضافه کردن تست‌هایی که تنها یک فراخوانی ساده از کلاس یا متد هستند و بدون استفاده در بخش‌های دیگر کد کاربردی ندارند، خودداری کنید.
+### TDD (test-driven development)
+
+In TDD, the tests are written first, and then the code that makes them pass. TDD suits projects that:
+
+- are complex and need confidence that each part works correctly;
+- change often and are updated continuously;
+- must work correctly and without errors, such as financial and medical systems.
+
+### Traditional testing
+
+In traditional testing, the code is written first, and then tests are written to check it. This suits projects that:
+
+- are small and short-lived, with little time for writing tests up front;
+- change little and are updated rarely;
+- are less critical, so errors have smaller consequences.
+
+## 2. Responsibilities of the development team and the QA team in software testing
+
+### Development team
+
+The development team usually works with:
+
+- **Unit tests:** check the smallest units of code (functions or methods) and help developers make sure each unit works correctly.
+- **Integration tests:** check the interaction between several units of code to make sure the parts of the system work together correctly.
+
+### Quality assurance (QA) team
+
+The QA team usually works with:
+
+- **System tests:** check the whole system as one unit and make sure it works correctly as a whole.
+- **Acceptance tests:** check that the system works correctly against its requirements and acceptance criteria.
+- **User acceptance testing (UAT):** performed by end users to make sure the system meets their needs.
+
+### Short description of the test types
+
+- **Unit test:** checks that one specific unit of code works correctly and precisely.
+- **Integration test:** checks the interaction between different units of code.
+- **System test:** checks the whole system as one unit.
+- **Acceptance test:** checks whether the system meets its requirements and acceptance criteria.
+- **User acceptance test (UAT):** performed by end users to make sure the system meets their needs.
+
+## 3. Getting test coverage numbers for the json-simple project
+
+To get the test coverage numbers for the project:
+
+1. Right-click the `java` package under `test`.
+2. Choose **Run 'All Tests' with Coverage**.
+3. The coverage numbers for the project are shown.
+
+There is no need to run the project normally; this step alone gives the coverage numbers.
+
+## 4. Improving coverage by extending the test code
+
+To improve the coverage numbers, add meaningful parts to the test code. They should:
+
+- exercise real, useful interactions between classes and methods;
+- cover code that the existing tests do not cover;
+- help in understanding how the system works as a whole.
+
+Important: avoid adding tests that only make a trivial call to a class or method and have no use elsewhere in the code.
